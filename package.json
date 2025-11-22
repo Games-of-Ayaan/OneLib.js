@@ -1,0 +1,49 @@
+{
+  "name": "onelib",
+  "version": "1.0.0",
+  "description": "A lightweight utility library with 50+ one-word functions for modern web development",
+  "main": "onelib.js",
+  "module": "onelib.js",
+  "types": "onelib.d.ts",
+  "files": [
+    "onelib.js",
+    "onelib.min.js",
+    "onelib.d.ts",
+    "docs.md"
+  ],
+  "scripts": {
+    "build": "node build.js",
+    "test": "node test.js",
+    "demo": "open index.html"
+  },
+  "keywords": [
+    "utility",
+    "library",
+    "javascript",
+    "dom",
+    "helpers",
+    "lightweight",
+    "vanilla-js",
+    "utilities",
+    "toolkit"
+  ],
+  "author": "OneLib Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onelib/onelib.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onelib/onelib.js/issues"
+  },
+  "homepage": "https://onelib.js.org",
+  "cdn": "https://cdn.example.com/onelib/v1/onelib.min.js",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

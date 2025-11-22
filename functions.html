@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneLib.js - All Functions Showcase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .container { 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 80px 0 60px;
+        }
+        
+        .header h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+        
+        .header p {
+            font-size: 1.4rem;
+            font-weight: 400;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .nav {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 30px;
+            margin: 0 10px 10px;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .nav a:hover::before {
+            left: 100%;
+        }
+        
+        .nav a:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(78, 205, 196, 0.3);
+        }
+        
+        .main-content {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .category {
+            margin-bottom: 80px;
+        }
+        
+        .category h2 {
+            color: #4ecdc4;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+        
+        .category h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            border-radius: 2px;
+        }
+        
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+        }
+        
+        .function-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 35px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .function-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .function-card:hover::before {
+            left: 100%;
+        }
+        
+        .function-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: rgba(78, 205, 196, 0.4);
+            box-shadow: 0 30px 60px rgba(78, 205, 196, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .function-name {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+        
+        .function-desc {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+            margin-bottom: 25px;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        
+        .function-syntax {
+            background: rgba(0, 0, 0, 0.5);
+            color: #4ecdc4;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .function-example {
+            background: rgba(78, 205, 196, 0.1);
+            border-left: 4px solid #4ecdc4;
+            padding: 18px;
+            border-radius: 0 12px 12px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 15px;
+        }
+        
+        .usecase {
+            background: rgba(255, 107, 107, 0.1);
+            border-left: 4px solid #ff6b6b;
+            padding: 18px;
+            border-radius: 0 12px 12px 0;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+        
+        .count-badge {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .stats-section {
+            text-align: center;
+            margin: 80px 0;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stats-section h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .stats-section p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            display: inline-block;
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.3);
+        }
+        
+        .back-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.4);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+        
+        .footer-email {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-email:hover {
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        .github-icon {
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .github-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .github-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: rgba(255, 255, 255, 0.7);
+            transition: fill 0.3s ease;
+        }
+        
+        .github-icon:hover svg {
+            fill: #4ecdc4;
+        }
+        
+        @media (max-width: 768px) {
+            .functions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .category h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle" style="width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+        <div class="floating-circle" style="width: 80px; height: 80px; top: 20%; right: 10%; animation-delay: 2s;"></div>
+        <div class="floating-circle" style="width: 100px; height: 100px; bottom: 30%; left: 15%; animation-delay: 4s;"></div>
+        <div class="floating-circle" style="width: 150px; height: 150px; bottom: 10%; right: 5%; animation-delay: 1s;"></div>
+        <div class="floating-circle" style="width: 90px; height: 90px; top: 50%; left: 80%; animation-delay: 3s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>OneLib.js Functions</h1>
+            <p>Complete reference of all 63 utility functions with real-world examples</p>
+        </div>
+
+        <div class="nav">
+            <a href="index.html">← Back to Demo</a>
+            <a href="docs.md">Documentation</a>
+            <a href="https://github.com/Games-of-Ayaan/OneLib.js" target="_blank">GitHub Repo</a>
+        </div>
+
+        <div class="main-content">
+            <!-- DOM Utilities -->
+            <div class="category">
+                <h2>DOM Utilities <span class="count-badge">13</span></h2>
+                <div class="functions-grid">
+                    <div class="function-card">
+                        <div class="function-name">select(selector)</div>
+                        <div class="function-desc">Select the first element matching CSS selector</div>
+                        <div class="function-syntax">OneLib.select('#myDiv')</div>
+                        <div class="function-example">const el = OneLib.select('.button');</div>
+                        <div class="usecase">Use case: Quick DOM element selection for manipulation</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">html(selector, content)</div>
+                        <div class="function-desc">Get or set innerHTML of element</div>
+                        <div class="function-syntax">OneLib.html('#content', '&lt;h1&gt;Hello&lt;/h1&gt;')</div>
+                        <div class="function-example">OneLib.html('#title', '&lt;strong&gt;New Title&lt;/strong&gt;');</div>
+                        <div class="usecase">Use case: Dynamic content updates, template rendering</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">css(selector, styles)</div>
+                        <div class="function-desc">Apply CSS styles to element</div>
+                        <div class="function-syntax">OneLib.css('#box', {color: 'red'})</div>
+                        <div class="function-example">OneLib.css('.card', {transform: 'scale(1.1)'});</div>
+                        <div class="usecase">Use case: Dynamic styling, animations</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">on(selector, event, callback)</div>
+                        <div class="function-desc">Add event listener to element</div>
+                        <div class="function-syntax">OneLib.on('#btn', 'click', handler)</div>
+                        <div class="function-example">OneLib.on('.tab', 'click', switchTab);</div>
+                        <div class="usecase">Use case: Interactive UI, form handling</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Math Helpers -->
+            <div class="category">
+                <h2>Math Helpers <span class="count-badge">10</span></h2>
+                <div class="functions-grid">
+                    <div class="function-card">
+                        <div class="function-name">sum(array)</div>
+                        <div class="function-desc">Calculate sum of numbers</div>
+                        <div class="function-syntax">OneLib.sum([1, 2, 3])</div>
+                        <div class="function-example">const total = OneLib.sum(cartPrices);</div>
+                        <div class="usecase">Use case: Shopping carts, totals calculation</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">avg(array)</div>
+                        <div class="function-desc">Calculate average of numbers</div>
+                        <div class="function-syntax">OneLib.avg([1, 2, 3, 4, 5])</div>
+                        <div class="function-example">const avgScore = OneLib.avg(testScores);</div>
+                        <div class="usecase">Use case: Statistics, performance metrics</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">rand(min, max)</div>
+                        <div class="function-desc">Generate random number between min and max</div>
+                        <div class="function-syntax">OneLib.rand(1, 100)</div>
+                        <div class="function-example">const price = OneLib.rand(10, 99.99);</div>
+                        <div class="usecase">Use case: Random values, simulations, games</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">clamp(value, min, max)</div>
+                        <div class="function-desc">Clamp value between min and max bounds</div>
+                        <div class="function-syntax">OneLib.clamp(150, 0, 100)</div>
+                        <div class="function-example">const volume = OneLib.clamp(userInput, 0, 100);</div>
+                        <div class="usecase">Use case: Input validation, slider controls</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Helpers -->
+            <div class="category">
+                <h2>Text Helpers <span class="count-badge">8</span></h2>
+                <div class="functions-grid">
+                    <div class="function-card">
+                        <div class="function-name">slug(text)</div>
+                        <div class="function-desc">Convert text to URL-friendly slug</div>
+                        <div class="function-syntax">OneLib.slug('Hello World!')</div>
+                        <div class="function-example">const url = `/posts/${OneLib.slug(title)}`;</div>
+                        <div class="usecase">Use case: URL generation, SEO-friendly links</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">words(text)</div>
+                        <div class="function-desc">Split text into array of words</div>
+                        <div class="function-syntax">OneLib.words('hello world')</div>
+                        <div class="function-example">const wordCount = OneLib.words(article).length;</div>
+                        <div class="usecase">Use case: Word counting, text analysis</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">truncate(text, length)</div>
+                        <div class="function-desc">Truncate text with ellipsis</div>
+                        <div class="function-syntax">OneLib.truncate('Long text', 5)</div>
+                        <div class="function-example">const preview = OneLib.truncate(description, 100);</div>
+                        <div class="usecase">Use case: Text previews, card descriptions</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">capitalize(text)</div>
+                        <div class="function-desc">Capitalize first letter</div>
+                        <div class="function-syntax">OneLib.capitalize('hello')</div>
+                        <div class="function-example">const name = OneLib.capitalize(firstName);</div>
+                        <div class="usecase">Use case: Name formatting, sentence case</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Array Helpers -->
+            <div class="category">
+                <h2>Array Helpers <span class="count-badge">8</span></h2>
+                <div class="functions-grid">
+                    <div class="function-card">
+                        <div class="function-name">unique(array)</div>
+                        <div class="function-desc">Remove duplicate values from array</div>
+                        <div class="function-syntax">OneLib.unique([1, 2, 2, 3])</div>
+                        <div class="function-example">const uniqueTags = OneLib.unique(allTags);</div>
+                        <div class="usecase">Use case: Filtering duplicates, tag systems</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">chunk(array, size)</div>
+                        <div class="function-desc">Split array into chunks of specified size</div>
+                        <div class="function-syntax">OneLib.chunk([1,2,3,4,5], 2)</div>
+                        <div class="function-example">const pages = OneLib.chunk(items, 10);</div>
+                        <div class="usecase">Use case: Pagination, batch processing</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">shuffle(array)</div>
+                        <div class="function-desc">Randomly shuffle array elements</div>
+                        <div class="function-syntax">OneLib.shuffle([1, 2, 3, 4])</div>
+                        <div class="function-example">const randomOrder = OneLib.shuffle(playlist);</div>
+                        <div class="usecase">Use case: Randomizing lists, shuffle features</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">sortnum(array)</div>
+                        <div class="function-desc">Sort array of numbers ascending</div>
+                        <div class="function-syntax">OneLib.sortnum([3, 1, 4, 1, 5])</div>
+                        <div class="function-example">const sorted = OneLib.sortnum(scores);</div>
+                        <div class="usecase">Use case: Leaderboards, numerical data sorting</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Storage & Utilities -->
+            <div class="category">
+                <h2>Storage & Utilities <span class="count-badge">12</span></h2>
+                <div class="functions-grid">
+                    <div class="function-card">
+                        <div class="function-name">save(key, value)</div>
+                        <div class="function-desc">Save data to localStorage with JSON serialization</div>
+                        <div class="function-syntax">OneLib.save('user', {name: 'John'})</div>
+                        <div class="function-example">OneLib.save('settings', {theme: 'dark'});</div>
+                        <div class="usecase">Use case: User preferences, app state persistence</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">load(key)</div>
+                        <div class="function-desc">Load data from localStorage with JSON parsing</div>
+                        <div class="function-syntax">OneLib.load('user')</div>
+                        <div class="function-example">const settings = OneLib.load('userSettings');</div>
+                        <div class="usecase">Use case: Restoring app state, loading user data</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">copy(text)</div>
+                        <div class="function-desc">Copy text to clipboard</div>
+                        <div class="function-syntax">OneLib.copy('Hello World')</div>
+                        <div class="function-example">await OneLib.copy(shareUrl);</div>
+                        <div class="usecase">Use case: Share buttons, code snippets copying</div>
+                    </div>
+
+                    <div class="function-card">
+                        <div class="function-name">uuid()</div>
+                        <div class="function-desc">Generate UUID v4 string</div>
+                        <div class="function-syntax">OneLib.uuid()</div>
+                        <div class="function-example">const sessionId = OneLib.uuid();</div>
+                        <div class="usecase">Use case: Session IDs, database keys</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <h2>Total: 63 Functions</h2>
+                <p>All functions are lightweight, performant, and ready to use in your projects!</p>
+                <a href="index.html" class="back-button">← Back to Interactive Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-text">A GameDev Ayaan Creation</div>
+            <div class="footer-text">
+                <a href="mailto:gamedevayaan@gmail.com" class="footer-email">gamedevayaan@gmail.com</a>
+            </div>
+            <a href="https://github.com/Games-of-Ayaan/OneLib.js" target="_blank" class="github-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script src="onelib.js"></script>
+</body>
+</html>

@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OneLib.js - Modern JavaScript Utility Library</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(83, 52, 131, 0.3) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            max-width: 800px;
+            padding: 40px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 50%, #4ecdc4 100%);
+            border: none;
+            padding: 20px 45px;
+            border-radius: 60px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            margin: 8px;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-secondary {
+            background: linear-gradient(135deg, #45b7d1 0%, #6dd5ed 50%, #96ceb4 100%);
+            box-shadow: 0 15px 35px rgba(69, 183, 209, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .cta-secondary:hover {
+            box-shadow: 0 25px 50px rgba(69, 183, 209, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .cta-github {
+            background: linear-gradient(135deg, #24292e 0%, #444d56 50%, #586069 100%);
+            box-shadow: 0 15px 35px rgba(36, 41, 46, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .cta-github:hover {
+            box-shadow: 0 25px 50px rgba(36, 41, 46, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+            }
+            .cta-button {
+                width: 280px;
+                text-align: center;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .use-case-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .use-case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .use-case-card:hover::before {
+            left: 100%;
+        }
+
+        .use-case-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(78, 205, 196, 0.5);
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
+        }
+
+        .use-case-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #4ecdc4;
+        }
+
+        .use-case-desc {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .demo-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .demo-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .demo-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .demo-output {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            min-height: 80px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            color: #4ecdc4;
+        }
+
+        .code-snippet {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid #4ecdc4;
+            margin: 15px 0;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .code-snippet:hover {
+            background: rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .copy-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(78, 205, 196, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .code-snippet:hover .copy-indicator {
+            opacity: 1;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4ecdc4;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-top: 10px;
+        }
+
+        .interactive-demo {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-playground {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .input-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .demo-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .demo-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 100px;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+        
+        .footer-email {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-email:hover {
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        .github-icon {
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .github-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .github-icon svg {
+            width: 32px;
+            height: 32px;
+            fill: rgba(255, 255, 255, 0.7);
+            transition: fill 0.3s ease;
+        }
+        
+        .github-icon:hover svg {
+            fill: #4ecdc4;
+        }
+        
+        @media (max-width: 768px) {
+            .demo-playground {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle" style="width: 100px; height: 100px; top: 10%; left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-circle" style="width: 150px; height: 150px; top: 20%; right: 10%; animation-delay: 2s;"></div>
+        <div class="floating-circle" style="width: 80px; height: 80px; bottom: 20%; left: 20%; animation-delay: 4s;"></div>
+        <div class="floating-circle" style="width: 120px; height: 120px; bottom: 10%; right: 20%; animation-delay: 1s;"></div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>OneLib.js</h1>
+            <p>The modern JavaScript utility library that makes everyday coding effortless</p>
+            <div class="button-container">
+                <button class="cta-button" onclick="scrollToDemo()">Try It Live</button>
+                <a href="functions.html" class="cta-button cta-secondary">All Functions</a>
+                <a href="docs.md" class="cta-button cta-secondary">Documentation</a>
+                <a href="https://github.com/Games-of-Ayaan/OneLib.js" target="_blank" class="cta-button cta-github">GitHub Repo</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Real-World Use Cases</h2>
+            
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <h3 class="use-case-title">E-commerce Shopping Cart</h3>
+                    <p class="use-case-desc">Calculate totals, validate inputs, and manage cart state with ease</p>
+                    <div class="demo-area">
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="addToCart()">Add Item ($19.99)</button>
+                            <button class="demo-btn" onclick="calculateTotal()">Calculate Total</button>
+                            <button class="demo-btn" onclick="clearCart()">Clear Cart</button>
+                        </div>
+                        <div class="demo-output" id="cart-output">Cart is empty</div>
+                    </div>
+                    <div class="code-snippet">
+// Add item to cart
+const price = 19.99;
+cartItems.push(price);
+OneLib.save('cart', cartItems);
+
+// Calculate total
+const total = OneLib.sum(cartItems);
+OneLib.text('#total', `$${OneLib.round(total, 2)}`);
+                    </div>
+                </div>
+
+                <div class="use-case-card">
+                    <h3 class="use-case-title">Social Media Feed</h3>
+                    <p class="use-case-desc">Format timestamps, truncate posts, and handle user interactions</p>
+                    <div class="demo-area">
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="createPost()">Create Post</button>
+                            <button class="demo-btn" onclick="likePost()">Like Post</button>
+                            <button class="demo-btn" onclick="sharePost()">Share Post</button>
+                        </div>
+                        <div class="demo-output" id="social-output">No posts yet</div>
+                    </div>
+                    <div class="code-snippet">
+// Create post with timestamp
+const post = {
+  content: OneLib.truncate(userInput, 280),
+  timestamp: OneLib.now(),
+  likes: 0
+};
+
+// Display relative time
+OneLib.text('.time', OneLib.since(post.timestamp));
+                    </div>
+                </div>
+
+                <div class="use-case-card">
+                    <h3 class="use-case-title">Form Validation</h3>
+                    <p class="use-case-desc">Validate user inputs, sanitize data, and provide instant feedback</p>
+                    <div class="demo-area">
+                        <input type="email" class="demo-input" id="email-input" placeholder="Enter your email">
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="validateEmail()">Validate Email</button>
+                            <button class="demo-btn" onclick="formatName()">Format Name</button>
+                            <button class="demo-btn" onclick="checkPassword()">Check Password</button>
+                        </div>
+                        <div class="demo-output" id="validation-output">Enter data to validate</div>
+                    </div>
+                    <div class="code-snippet">
+// Validate email
+const email = OneLib.trim(OneLib.lower(userInput));
+const isValid = email.includes('@') && !OneLib.isempty(email);
+
+// Format name
+const name = OneLib.capitalize(OneLib.trim(nameInput));
+                    </div>
+                </div>
+
+                <div class="use-case-card">
+                    <h3 class="use-case-title">Data Dashboard</h3>
+                    <p class="use-case-desc">Process analytics data, calculate statistics, and update charts</p>
+                    <div class="demo-area">
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="generateData()">Generate Data</button>
+                            <button class="demo-btn" onclick="calculateStats()">Calculate Stats</button>
+                            <button class="demo-btn" onclick="exportData()">Export CSV</button>
+                        </div>
+                        <div class="demo-output" id="dashboard-output">No data loaded</div>
+                    </div>
+                    <div class="code-snippet">
+// Process analytics data
+const data = [45, 67, 23, 89, 12, 56, 78];
+const stats = {
+  average: OneLib.avg(data),
+  total: OneLib.sum(data),
+  max: OneLib.max(data),
+  min: OneLib.min(data)
+};
+                    </div>
+                </div>
+
+                <div class="use-case-card">
+                    <h3 class="use-case-title">Content Management</h3>
+                    <p class="use-case-desc">Create SEO-friendly URLs, manage content, and handle media</p>
+                    <div class="demo-area">
+                        <input type="text" class="demo-input" id="title-input" placeholder="Enter article title">
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="createSlug()">Create URL Slug</button>
+                            <button class="demo-btn" onclick="countWords()">Count Words</button>
+                            <button class="demo-btn" onclick="generateId()">Generate ID</button>
+                        </div>
+                        <div class="demo-output" id="cms-output">Enter a title to start</div>
+                    </div>
+                    <div class="code-snippet">
+// Create SEO-friendly URL
+const title = "How to Build Amazing Web Apps";
+const slug = OneLib.slug(title); // "how-to-build-amazing-web-apps"
+const url = `/articles/${slug}`;
+
+// Generate unique ID
+const articleId = OneLib.uuid();
+                    </div>
+                </div>
+
+                <div class="use-case-card">
+                    <h3 class="use-case-title">User Interface Animations</h3>
+                    <p class="use-case-desc">Create smooth transitions, handle user interactions, and manage UI state</p>
+                    <div class="demo-area">
+                        <div id="animation-box" style="width: 100px; height: 100px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-radius: 10px; margin: 20px auto; transition: all 0.3s ease;"></div>
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="animateBox()">Animate</button>
+                            <button class="demo-btn" onclick="scaleBox()">Scale</button>
+                            <button class="demo-btn" onclick="resetBox()">Reset</button>
+                        </div>
+                        <div class="demo-output" id="animation-output">Click buttons to animate</div>
+                    </div>
+                    <div class="code-snippet">
+// Smooth animations
+OneLib.fadein('#modal', 500);
+OneLib.move('#element', 100, 50);
+OneLib.scale('#image', 1.2);
+
+// Toggle UI states
+OneLib.cls('#menu', 'active');
+OneLib.toggle('#sidebar');
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">63</span>
+                    <div class="stat-label">Utility Functions</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">0</span>
+                    <div class="stat-label">Dependencies</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">12KB</span>
+                    <div class="stat-label">Minified Size</div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <div class="stat-label">TypeScript Support</div>
+                </div>
+            </div>
+
+            <div class="interactive-demo" id="interactive-demo">
+                <h3 style="text-align: center; margin-bottom: 30px; font-size: 2rem; color: #4ecdc4;">Interactive Playground</h3>
+                <div class="demo-playground">
+                    <div class="input-area">
+                        <h4 style="margin-bottom: 20px;">Try OneLib Functions</h4>
+                        <input type="text" class="demo-input" id="playground-input" placeholder="Enter some text...">
+                        <div class="demo-buttons">
+                            <button class="demo-btn" onclick="playgroundUpper()">UPPERCASE</button>
+                            <button class="demo-btn" onclick="playgroundReverse()">Reverse</button>
+                            <button class="demo-btn" onclick="playgroundSlug()">Create Slug</button>
+                            <button class="demo-btn" onclick="playgroundWords()">Count Words</button>
+                        </div>
+                    </div>
+                    <div class="demo-output" id="playground-output">Results will appear here...</div>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3 style="text-align: center; margin-bottom: 30px; font-size: 2rem; color: #4ecdc4;">Installation & Import</h3>
+                <div class="use-cases-grid">
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">JavaScript / Node.js</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+
+// ES6 Import
+import OneLib from 'onelib';
+
+// CommonJS
+const OneLib = require('onelib');
+
+// Browser CDN
+&lt;script src="https://cdn.example.com/onelib/v1/onelib.min.js"&gt;&lt;/script&gt;
+
+// Usage
+OneLib.select('#myElement');
+OneLib.sum([1, 2, 3, 4, 5]);
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">TypeScript</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+npm install @types/onelib
+
+// Import with full type support
+import OneLib from 'onelib';
+
+// Usage with IntelliSense
+const result: number = OneLib.sum([1, 2, 3]);
+const element: Element | null = OneLib.select('.btn');
+const isValid: boolean = OneLib.isnum(42);
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">React</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+
+// Import in component
+import React, { useState, useEffect } from 'react';
+import OneLib from 'onelib';
+
+function MyComponent() {
+  const [data, setData] = useState([]);
+  
+  useEffect(() => {
+    const saved = OneLib.load('userData');
+    if (saved) setData(saved);
+  }, []);
+  
+  const handleSave = () => {
+    OneLib.save('userData', data);
+  };
+  
+  return &lt;div&gt;{OneLib.sum(data)}&lt;/div&gt;;
+}
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">Vue.js</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+
+// Import in component
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;p&gt;Total: {{ total }}&lt;/p&gt;
+    &lt;button @click="calculate"&gt;Calculate&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import OneLib from 'onelib';
+
+export default {
+  data() {
+    return {
+      numbers: [1, 2, 3, 4, 5],
+      total: 0
+    }
+  },
+  methods: {
+    calculate() {
+      this.total = OneLib.sum(this.numbers);
+    }
+  }
+}
+&lt;/script&gt;
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">Angular</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+
+// Import in service
+import { Injectable } from '@angular/core';
+import OneLib from 'onelib';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  
+  processData(items: number[]): any {
+    return {
+      sum: OneLib.sum(items),
+      avg: OneLib.avg(items),
+      max: OneLib.max(items),
+      min: OneLib.min(items)
+    };
+  }
+  
+  saveUserData(data: any): void {
+    OneLib.save('user', data);
+  }
+}
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">Svelte</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+
+// Import in component
+&lt;script&gt;
+  import OneLib from 'onelib';
+  
+  let inputText = '';
+  let result = '';
+  
+  function processText() {
+    result = OneLib.slug(inputText);
+  }
+&lt;/script&gt;
+
+&lt;input bind:value={inputText} placeholder="Enter text" /&gt;
+&lt;button on:click={processText}&gt;Create Slug&lt;/button&gt;
+&lt;p&gt;Slug: {result}&lt;/p&gt;
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">Next.js</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+npm install onelib
+
+// pages/api/data.js (API Route)
+import OneLib from 'onelib';
+
+export default function handler(req, res) {
+  const data = req.body.numbers;
+  const stats = {
+    sum: OneLib.sum(data),
+    avg: OneLib.avg(data),
+    id: OneLib.uuid()
+  };
+  
+  res.status(200).json(stats);
+}
+
+// pages/index.js (Component)
+import OneLib from 'onelib';
+
+export default function Home({ data }) {
+  return &lt;div&gt;{OneLib.format(new Date())}&lt;/div&gt;;
+}
+                        </div>
+                    </div>
+
+                    <div class="use-case-card">
+                        <h3 class="use-case-title">Deno</h3>
+                        <div class="code-snippet" onclick="copyCode(this)">
+                            <div class="copy-indicator">Click to copy</div>
+// Import from URL
+import OneLib from 'https://deno.land/x/onelib/mod.ts';
+
+// Or from npm
+import OneLib from 'npm:onelib';
+
+// Usage
+const data = [1, 2, 3, 4, 5];
+console.log('Sum:', OneLib.sum(data));
+console.log('Average:', OneLib.avg(data));
+
+// File operations
+const text = await Deno.readTextFile('./data.txt');
+const words = OneLib.words(text);
+console.log('Word count:', words.length);
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-text">A GameDev Ayaan Creation</div>
+            <div class="footer-text">
+                <a href="mailto:gamedevayaan@gmail.com" class="footer-email">gamedevayaan@gmail.com</a>
+            </div>
+            <a href="https://github.com/Games-of-Ayaan/OneLib.js" target="_blank" class="github-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+    <script src="onelib.js"></script>
+    <script>
+        // Check if OneLib is loaded, if not create mock functions
+        if (typeof OneLib === 'undefined') {
+            window.OneLib = {
+                load: (key) => JSON.parse(localStorage.getItem(key) || 'null'),
+                save: (key, value) => localStorage.setItem(key, JSON.stringify(value)),
+                sum: (arr) => arr.reduce((a, b) => a + b, 0),
+                round: (num, decimals) => Math.round(num * Math.pow(10, decimals)) / Math.pow(10, decimals),
+                now: () => new Date(),
+                since: (date) => {
+                    const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+                    if (seconds < 60) return 'just now';
+                    if (seconds < 3600) return Math.floor(seconds / 60) + ' minutes ago';
+                    if (seconds < 86400) return Math.floor(seconds / 3600) + ' hours ago';
+                    return Math.floor(seconds / 86400) + ' days ago';
+                },
+                truncate: (text, length) => text.length > length ? text.slice(0, length) + '...' : text,
+                copy: async (text) => {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    } catch {
+                        return false;
+                    }
+                },
+                trim: (text) => text.trim(),
+                lower: (text) => text.toLowerCase(),
+                isempty: (val) => val == null || val === '' || (Array.isArray(val) && val.length === 0),
+                capitalize: (text) => text.charAt(0).toUpperCase() + text.slice(1).toLowerCase(),
+                randint: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
+                avg: (arr) => arr.reduce((a, b) => a + b, 0) / arr.length,
+                max: (arr) => Math.max(...arr),
+                min: (arr) => Math.min(...arr),
+                uuid: () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+                    const r = Math.random() * 16 | 0;
+                    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                }),
+                slug: (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+                words: (text) => text.split(/\s+/).filter(Boolean),
+                upper: (text) => text.toUpperCase(),
+                reverse: (text) => text.split('').reverse().join(''),
+                rand: (min, max) => Math.random() * (max - min) + min
+            };
+        }
+
+        // Shopping Cart Demo
+        let cartItems = OneLib.load('cartItems') || [];
+        
+        function addToCart() {
+            const price = 19.99;
+            cartItems.push(price);
+            OneLib.save('cartItems', cartItems);
+            updateCartDisplay();
+        }
+        
+        function calculateTotal() {
+            const total = OneLib.sum(cartItems);
+            const output = document.getElementById('cart-output');
+            output.innerHTML = `Items: ${cartItems.length}<br>Total: $${OneLib.round(total, 2)}`;
+        }
+        
+        function clearCart() {
+            cartItems = [];
+            OneLib.save('cartItems', cartItems);
+            updateCartDisplay();
+        }
+        
+        function updateCartDisplay() {
+            const output = document.getElementById('cart-output');
+            if (cartItems.length === 0) {
+                output.innerHTML = 'Cart is empty';
+            } else {
+                output.innerHTML = `Items in cart: ${cartItems.length}<br>Click "Calculate Total" to see price`;
+            }
+        }
+
+        // Social Media Demo
+        let posts = [];
+        let postId = 0;
+        
+        function createPost() {
+            const post = {
+                id: ++postId,
+                content: OneLib.truncate("This is an amazing post about OneLib.js! It makes JavaScript development so much easier and more fun.", 50),
+                timestamp: OneLib.now(),
+                likes: 0
+            };
+            posts.push(post);
+            
+            const output = document.getElementById('social-output');
+            output.innerHTML = `Post created: "${post.content}"<br>Posted: ${OneLib.since(post.timestamp)}<br>Likes: ${post.likes}`;
+        }
+        
+        function likePost() {
+            if (posts.length > 0) {
+                posts[posts.length - 1].likes++;
+                const post = posts[posts.length - 1];
+                const output = document.getElementById('social-output');
+                output.innerHTML = `Post: "${post.content}"<br>Posted: ${OneLib.since(post.timestamp)}<br>Likes: ${post.likes}`;
+            }
+        }
+        
+        function sharePost() {
+            if (posts.length > 0) {
+                const post = posts[posts.length - 1];
+                OneLib.copy(`Check out this post: "${post.content}"`);
+                const output = document.getElementById('social-output');
+                output.innerHTML = `Post copied to clipboard!<br>Likes: ${post.likes}`;
+            }
+        }
+
+        // Form Validation Demo
+        function validateEmail() {
+            const email = document.getElementById('email-input').value;
+            const cleanEmail = OneLib.trim(OneLib.lower(email));
+            const isValid = cleanEmail.includes('@') && !OneLib.isempty(cleanEmail);
+            
+            const output = document.getElementById('validation-output');
+            output.innerHTML = `Email: ${cleanEmail}<br>Valid: ${isValid ? 'Yes' : 'No'}`;
+        }
+        
+        function formatName() {
+            const name = document.getElementById('email-input').value;
+            const formatted = OneLib.capitalize(OneLib.trim(name));
+            
+            const output = document.getElementById('validation-output');
+            output.innerHTML = `Original: ${name}<br>Formatted: ${formatted}`;
+        }
+        
+        function checkPassword() {
+            const password = document.getElementById('email-input').value;
+            const strength = password.length >= 8 ? 'Strong' : 'Weak';
+            
+            const output = document.getElementById('validation-output');
+            output.innerHTML = `Password length: ${password.length}<br>Strength: ${strength}`;
+        }
+
+        // Dashboard Demo
+        let dashboardData = [];
+        
+        function generateData() {
+            dashboardData = [];
+            for (let i = 0; i < 10; i++) {
+                dashboardData.push(OneLib.randint(10, 100));
+            }
+            
+            const output = document.getElementById('dashboard-output');
+            output.innerHTML = `Generated data: [${dashboardData.join(', ')}]`;
+        }
+        
+        function calculateStats() {
+            if (dashboardData.length === 0) {
+                generateData();
+            }
+            
+            const stats = {
+                average: OneLib.round(OneLib.avg(dashboardData), 2),
+                total: OneLib.sum(dashboardData),
+                max: OneLib.max(dashboardData),
+                min: OneLib.min(dashboardData)
+            };
+            
+            const output = document.getElementById('dashboard-output');
+            output.innerHTML = `Average: ${stats.average}<br>Total: ${stats.total}<br>Max: ${stats.max}<br>Min: ${stats.min}`;
+        }
+        
+        function exportData() {
+            if (dashboardData.length === 0) {
+                generateData();
+            }
+            
+            const csv = dashboardData.join(',');
+            OneLib.copy(csv);
+            
+            const output = document.getElementById('dashboard-output');
+            output.innerHTML = `CSV data copied to clipboard:<br>${csv}`;
+        }
+
+        // CMS Demo
+        function createSlug() {
+            const title = document.getElementById('title-input').value;
+            const slug = OneLib.slug(title);
+            
+            const output = document.getElementById('cms-output');
+            output.innerHTML = `Title: ${title}<br>URL Slug: ${slug}<br>Full URL: /articles/${slug}`;
+        }
+        
+        function countWords() {
+            const title = document.getElementById('title-input').value;
+            const words = OneLib.words(title);
+            
+            const output = document.getElementById('cms-output');
+            output.innerHTML = `Title: ${title}<br>Word count: ${words.length}<br>Words: [${words.join(', ')}]`;
+        }
+        
+        function generateId() {
+            const id = OneLib.uuid();
+            
+            const output = document.getElementById('cms-output');
+            output.innerHTML = `Generated unique ID:<br>${id}`;
+        }
+
+        // Animation Demo
+        function animateBox() {
+            const box = document.getElementById('animation-box');
+            const randomX = OneLib.randint(-50, 50);
+            const randomY = OneLib.randint(-30, 30);
+            
+            box.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${OneLib.randint(0, 360)}deg)`;
+            
+            const output = document.getElementById('animation-output');
+            output.innerHTML = `Moved to: (${randomX}, ${randomY})<br>Rotated: ${OneLib.randint(0, 360)}°`;
+        }
+        
+        function scaleBox() {
+            const box = document.getElementById('animation-box');
+            const scale = OneLib.rand(0.5, 2);
+            
+            box.style.transform = `scale(${OneLib.round(scale, 2)})`;
+            
+            const output = document.getElementById('animation-output');
+            output.innerHTML = `Scaled to: ${OneLib.round(scale, 2)}x`;
+        }
+        
+        function resetBox() {
+            const box = document.getElementById('animation-box');
+            box.style.transform = 'none';
+            
+            const output = document.getElementById('animation-output');
+            output.innerHTML = 'Box reset to original position';
+        }
+
+        // Playground Demo
+        function playgroundUpper() {
+            const input = document.getElementById('playground-input').value;
+            const result = OneLib.upper(input);
+            
+            const output = document.getElementById('playground-output');
+            output.innerHTML = `Original: ${input}<br>Uppercase: ${result}`;
+        }
+        
+        function playgroundReverse() {
+            const input = document.getElementById('playground-input').value;
+            const result = OneLib.reverse(input);
+            
+            const output = document.getElementById('playground-output');
+            output.innerHTML = `Original: ${input}<br>Reversed: ${result}`;
+        }
+        
+        function playgroundSlug() {
+            const input = document.getElementById('playground-input').value;
+            const result = OneLib.slug(input);
+            
+            const output = document.getElementById('playground-output');
+            output.innerHTML = `Original: ${input}<br>Slug: ${result}`;
+        }
+        
+        function playgroundWords() {
+            const input = document.getElementById('playground-input').value;
+            const words = OneLib.words(input);
+            
+            const output = document.getElementById('playground-output');
+            output.innerHTML = `Text: ${input}<br>Word count: ${words.length}<br>Words: [${words.join(', ')}]`;
+        }
+
+        // Smooth scroll to demo
+        function scrollToDemo() {
+            document.getElementById('interactive-demo').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Initialize cart display
+        updateCartDisplay();
+        
+        // Copy code functionality
+        function copyCode(element) {
+            const code = element.textContent.replace('Click to copy', '').trim();
+            navigator.clipboard.writeText(code).then(() => {
+                const indicator = element.querySelector('.copy-indicator');
+                const originalText = indicator.textContent;
+                indicator.textContent = 'Copied!';
+                indicator.style.background = '#4ecdc4';
+                setTimeout(() => {
+                    indicator.textContent = originalText;
+                    indicator.style.background = 'rgba(78, 205, 196, 0.8)';
+                }, 2000);
+            });
+        }
+        
+        // Add input event listener for real-time playground updates
+        document.getElementById('playground-input').addEventListener('input', function() {
+            const input = this.value;
+            if (input.trim()) {
+                const output = document.getElementById('playground-output');
+                output.innerHTML = `Ready to transform: "${input}"<br>Click any button above to see the result!`;
+            }
+        });
+    </script>
+</body>
+</html>
