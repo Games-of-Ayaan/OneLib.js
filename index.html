@@ -666,13 +666,13 @@ OneLib.toggle('#sidebar');
                         <h3 class="use-case-title">JavaScript / Node.js</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
+npm install @gamedevayaan/onelib
 
 // ES6 Import
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 // CommonJS
-const OneLib = require('onelib');
+const OneLib = require('@gamedevayaan/onelib');
 
 // Browser CDN
 &lt;script src="https://cdn.example.com/onelib/v1/onelib.min.js"&gt;&lt;/script&gt;
@@ -687,11 +687,11 @@ OneLib.sum([1, 2, 3, 4, 5]);
                         <h3 class="use-case-title">TypeScript</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
-npm install @types/onelib
+npm install @gamedevayaan/onelib
+npm install @types/@gamedevayaan/onelib
 
 // Import with full type support
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 // Usage with IntelliSense
 const result: number = OneLib.sum([1, 2, 3]);
@@ -704,11 +704,11 @@ const isValid: boolean = OneLib.isnum(42);
                         <h3 class="use-case-title">React</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
+npm install @gamedevayaan/onelib
 
 // Import in component
 import React, { useState, useEffect } from 'react';
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 function MyComponent() {
   const [data, setData] = useState([]);
@@ -731,7 +731,7 @@ function MyComponent() {
                         <h3 class="use-case-title">Vue.js</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
+npm install @gamedevayaan/onelib
 
 // Import in component
 &lt;template&gt;
@@ -742,7 +742,7 @@ npm install onelib
 &lt;/template&gt;
 
 &lt;script&gt;
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 export default {
   data() {
@@ -765,11 +765,11 @@ export default {
                         <h3 class="use-case-title">Angular</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
+npm install @gamedevayaan/onelib
 
 // Import in service
 import { Injectable } from '@angular/core';
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 @Injectable({
   providedIn: 'root'
@@ -796,11 +796,11 @@ export class DataService {
                         <h3 class="use-case-title">Svelte</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
+npm install @gamedevayaan/onelib
 
 // Import in component
 &lt;script&gt;
-  import OneLib from 'onelib';
+  import OneLib from '@gamedevayaan/onelib';
   
   let inputText = '';
   let result = '';
@@ -820,10 +820,10 @@ npm install onelib
                         <h3 class="use-case-title">Next.js</h3>
                         <div class="code-snippet" onclick="copyCode(this)">
                             <div class="copy-indicator">Click to copy</div>
-npm install onelib
+npm install @gamedevayaan/onelib
 
 // pages/api/data.js (API Route)
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 export default function handler(req, res) {
   const data = req.body.numbers;
@@ -837,7 +837,7 @@ export default function handler(req, res) {
 }
 
 // pages/index.js (Component)
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 export default function Home({ data }) {
   return &lt;div&gt;{OneLib.format(new Date())}&lt;/div&gt;;
@@ -853,7 +853,7 @@ export default function Home({ data }) {
 import OneLib from 'https://deno.land/x/onelib/mod.ts';
 
 // Or from npm
-import OneLib from 'npm:onelib';
+import OneLib from 'npm:@gamedevayaan/onelib';
 
 // Usage
 const data = [1, 2, 3, 4, 5];

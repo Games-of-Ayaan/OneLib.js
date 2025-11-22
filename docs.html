@@ -576,21 +576,21 @@
                     <h4>NPM</h4>
                     <div class="code-block">
                         <button class="code-copy-btn" onclick="copyCodeBlock(this)">Copy</button>
-                        npm install onelib
+                        npm install @gamedevayaan/onelib
                     </div>
                 </div>
                 <div class="install-card">
                     <h4>Yarn</h4>
                     <div class="code-block">
                         <button class="code-copy-btn" onclick="copyCodeBlock(this)">Copy</button>
-                        yarn add onelib
+                        yarn add @gamedevayaan/onelib
                     </div>
                 </div>
                 <div class="install-card">
                     <h4>CDN</h4>
                     <div class="code-block">
                         <button class="code-copy-btn" onclick="copyCodeBlock(this)">Copy</button>
-                        &lt;script src="https://cdn.jsdelivr.net/npm/onelib@latest/onelib.min.js"&gt;&lt;/script&gt;
+                        &lt;script src="https://cdn.jsdelivr.net/npm/@gamedevayaan/onelib@latest/onelib.min.js"&gt;&lt;/script&gt;
                     </div>
                 </div>
             </div>
@@ -602,7 +602,7 @@
             <h3>ES6 Modules</h3>
             <div class="code-block">
                 <button class="code-copy-btn" onclick="copyCodeBlock(this)">Copy</button>
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 // DOM manipulation
 OneLib.select('#myElement');
@@ -620,7 +620,7 @@ const user = OneLib.load('user');
             <h3>CommonJS</h3>
             <div class="code-block">
                 <button class="code-copy-btn" onclick="copyCodeBlock(this)">Copy</button>
-const OneLib = require('onelib');
+const OneLib = require('@gamedevayaan/onelib');
 
 // Same API as ES6 modules
 OneLib.rand(1, 100);
@@ -1170,7 +1170,7 @@ const debouncedSave = OneLib.debounce(() => {
                     <h4>React</h4>
                     <div class="code-block">
 import React, { useState, useEffect } from 'react';
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 function ShoppingCart() {
   const [items, setItems] = useState([]);
@@ -1214,7 +1214,7 @@ function ShoppingCart() {
 &lt;/template&gt;
 
 &lt;script&gt;
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 export default {
   data() {
@@ -1248,7 +1248,7 @@ export default {
                     <h4>Angular</h4>
                     <div class="code-block">
 import { Component, Injectable } from '@angular/core';
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 @Injectable({
   providedIn: 'root'

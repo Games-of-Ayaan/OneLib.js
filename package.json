@@ -1,5 +1,5 @@
 {
-  "name": "onelib",
+  "name": "@gamedevayaan/onelib",
   "version": "1.0.0",
   "description": "A lightweight utility library with 50+ one-word functions for modern web development",
   "main": "onelib.js",

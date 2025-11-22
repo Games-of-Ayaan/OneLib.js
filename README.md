@@ -21,23 +21,23 @@ A lightweight JavaScript utility library with 63+ one-word functions for modern 
 
 ```bash
 # NPM
-npm install onelib
+npm install @gamedevayaan/onelib
 
 # Yarn
-yarn add onelib
+yarn add @gamedevayaan/onelib
 
 # CDN
-<script src="https://cdn.jsdelivr.net/npm/onelib@latest/onelib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@gamedevayaan/onelib@latest/onelib.min.js"></script>
 ```
 
 ### Usage
 
 ```javascript
 // ES6 Import
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 // CommonJS
-const OneLib = require('onelib');
+const OneLib = require('@gamedevayaan/onelib');
 
 // Browser Global
 // OneLib is available globally after including the script
@@ -169,7 +169,7 @@ const stats = {
 ### React
 ```javascript
 import React, { useState, useEffect } from 'react';
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 function MyComponent() {
   const [data, setData] = useState([]);
@@ -189,7 +189,7 @@ function MyComponent() {
 
 ### Vue.js
 ```javascript
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 export default {
   data() {
@@ -209,7 +209,7 @@ export default {
 ### Angular
 ```typescript
 import { Injectable } from '@angular/core';
-import OneLib from 'onelib';
+import OneLib from '@gamedevayaan/onelib';
 
 @Injectable({
   providedIn: 'root'
@@ -237,7 +237,7 @@ export class DataService {
 ## API Documentation
 
 For complete API documentation with all functions, parameters, and examples, visit:
-- [Full Documentation](https://games-of-ayaan.github.io/OneLib.js/docs.html)
+- [Full Documentation](docs.md)
 - [Interactive Demo](https://games-of-ayaan.github.io/OneLib.js/)
 - [All Functions Reference](https://games-of-ayaan.github.io/OneLib.js/functions.html)
 
@@ -331,4 +331,4 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ---
 
-A GameDev Ayaan Creation
+Made with ❤️ by GameDev Ayaan
