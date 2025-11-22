@@ -237,7 +237,7 @@ export class DataService {
 ## API Documentation
 
 For complete API documentation with all functions, parameters, and examples, visit:
-- [Full Documentation](docs.md)
+- [Full Documentation]([docs.md](https://games-of-ayaan.github.io/OneLib.js/docs.html))
 - [Interactive Demo](https://games-of-ayaan.github.io/OneLib.js/)
 - [All Functions Reference](https://games-of-ayaan.github.io/OneLib.js/functions.html)
 
